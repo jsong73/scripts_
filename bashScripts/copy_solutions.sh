@@ -1,24 +1,29 @@
 #!/bin/bash
-CWD=$(basename $PWD)
-TARGETDIR=$(find ../../../GT-VIRT-FSF-FT-09-2022-U-LOLC -maxdepth 1 -name "*${CWD}*")
+N=$1
+SRCtemp=$(find /c/Documents/GT-TA/Curriculum/fullstack-ground/01-Class-Content -maxdepth 1 -name "*${N}*")
+SRC="${SRCtemp}/01-Activities/*/"
+TARGETDIRtemp=$(find /c/Documents/GT-TA/GT-VIRT-FSF-FT-09-2022-U-LOLC -maxdepth 1 -name "*${N}*")
+TARGETDIR="${TARGETDIRtemp}/01-Activities/"
 
-STOP= $2
-i=$1
-
-while [ $i -le $STOP ]
+i=0
+for dir in $SRC
 do
-	if [[ $i -lt 10 ]]
+	current=$(basename $dir)
+	sliced=${current:0:2}
+	check=$(expr $sliced % 2)
+	if [[ $check = 1 || $i -lt $2 ]]
 	then
-		SOURCE=$(find -maxdepth 1 -name "*0${i}*")
-		TARGETSUB=$(find "${TARGETDIR}/01-Activities" -maxdepth 1 -name "*0${i}*")
+		((i++))
+		continue
+	elif [[ $i -ge $3 ]]
+	then
+		break
 	else
-		SOURCE=$(find -maxdepth 1 -name "*${i}*")
-		TARGETSUB=$( find "${TARGETDIR}/01-Activities" -maxdepth 1 -name "*${i}*")
+		solved=$(find $dir -maxdepth 1 -name "*Solved*")
+		targetsub=$(find $TARGETDIR -maxdepth 1 -name "*${sliced}*")
+		cp -r $solved $targetsub
+		((i++))
 	fi
-
-	cp -r "${SOURCE}/Solved" $TARGETSUB
-	(( i+=2 ))
 done
-
 
 
