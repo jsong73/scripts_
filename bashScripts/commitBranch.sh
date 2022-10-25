@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "What is the new branch name?"
 read NEW
 BRANCH=$(git name-rev --name-only HEAD)
