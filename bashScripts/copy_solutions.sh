@@ -8,12 +8,12 @@ TARGETDIR="${TARGETDIRtemp}/01-Activities/"
 i=0
 for dir in $SRC
 do
+	((i++))
 	current=$(basename $dir)
 	sliced=${current:0:2}
 	check=$(expr $sliced % 2)
 	if [[ $check = 1 || $i -lt $2 ]]
 	then
-		((i++))
 		continue
 	elif [[ $i -ge $3 ]]
 	then
@@ -22,7 +22,6 @@ do
 		solved=$(find $dir -maxdepth 1 -name "*Solved*")
 		targetsub=$(find $TARGETDIR -maxdepth 1 -name "*${sliced}*")
 		cp -r $solved $targetsub
-		((i++))
 	fi
 done
 
