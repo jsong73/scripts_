@@ -1,29 +1,24 @@
 #!/bin/bash
 N=$1
-SRCtemp=$(find /c/Documents/GT-TA/Curriculum/fullstack-ground/01-Class-Content -maxdepth 1 -name "*${N}*")
+SRCtemp=$(find /c/Documents/GT-TA/Curriculum/fullstack-ground/01-Class-Content -mindepth 1 -maxdepth 1 -name "*${N}*")
 SRC="${SRCtemp}/01-Activities/*/"
-TARGETDIRtemp=$(find /c/Documents/GT-TA/GT-VIRT-FSF-FT-09-2022-U-LOLC -maxdepth 1 -name "*${N}*")
+TARGETDIRtemp=$(find /c/Documents/GT-TA/GT-VIRT-FSF-FT-12-2022-U-LOLC -mindepth 1 -maxdepth 1 -name "*${N}*")
 TARGETDIR="${TARGETDIRtemp}/01-Activities/"
 
-i=0
 for dir in $SRC
 do
 	current=$(basename $dir)
 	sliced=${current:0:2}
 	check=$(expr $sliced % 2)
-	if [[ $check = 1 || $i -lt $2 ]]
+	if [[ $check = 1 || ${sliced#0} -lt $2 || ${sliced#0} -gt $3 ]]
 	then
-		((i++))
 		continue
-	elif [[ $i -ge $3 ]]
-	then
-		break
 	else
 		solved=$(find $dir -maxdepth 1 -name "*Solved*")
 		targetsub=$(find $TARGETDIR -maxdepth 1 -name "*${sliced}*")
 		cp -r $solved $targetsub
-		((i++))
 	fi
 done
-
+cd /c/Documents/GT-TA/GT-VIRT-FSF-FT-12-2022-U-LOLC
+~/commitMain.sh "Solutions for unit ${N}, activites ${2}-${3}"
 
