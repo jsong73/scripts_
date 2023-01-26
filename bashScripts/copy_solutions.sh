@@ -7,6 +7,7 @@ TARGETDIR="${TARGETDIRtemp}/01-Activities/"
 
 for dir in $SRC
 do
+	((i++))
 	current=$(basename $dir)
 	sliced=${current:0:2}
 	check=$(expr $sliced % 2)
