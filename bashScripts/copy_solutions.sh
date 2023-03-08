@@ -7,7 +7,6 @@ TARGETDIR="${TARGETDIRtemp}/01-Activities/"
 
 for dir in $SRC
 do
-	((i++))
 	current=$(basename $dir)
 	sliced=${current:0:2}
 	check=$(expr $sliced % 2)
@@ -21,5 +20,5 @@ do
 	fi
 done
 cd /c/Documents/GT-TA/GT-VIRT-FSF-FT-12-2022-U-LOLC
-~/commitMain.sh "Solutions for unit ${N}, activites ${2}-${3}"
+~/commitMain.sh "Solutions for unit ${N}, activities ${2}-${3}"
 
